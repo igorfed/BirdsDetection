@@ -32,6 +32,8 @@ class imList(object):
         self.fNum, self.pathToImage, self.sizeFNum = self.readFromXml( save_path_file)
 
         print (color.BLUE + color.BOLD + str(self.sizeFNum) + color.END, self.fNum)
+
+
     def getListOfFiles(self):
             # create a list of file and sub directories
             # names in the given directory
@@ -85,6 +87,14 @@ class imList(object):
                     fNum.append(int(a))
         return fNum, pathToImage, np.size(fNum)
 
+def createTxtFile(txtfile, data):
+    f = open(txtfile,"w+")
+    for i in range(len(data)):
+        #print(i, len(data))
+        f.write("%d\n" % data[i])
+    f.close()
+
+
 def common_member(a, b):
     a_set = set(a)
     b_set = set(b)
@@ -95,7 +105,7 @@ def common_member(a, b):
     else:
         print("No common elements")
 
-    return com
+    return list(set(com))
 def main():
 
     # Get the list of all files in directory tree at given path
@@ -107,9 +117,10 @@ def main():
      #             xmlfile = 'right')
     __mtR = imList(pathToDir='C:/Working/Skagen/Calibration/Frames/C2/', xmlfile = 'right_full')
     #listOfFiles = getListOfFiles(dirName)
-    print(__mtL.fNum)
+    #print(__mtL.fNum)
     com = common_member(a = __mtL.fNum, b= __mtR.fNum)
-    print(com)
+    createTxtFile(txtfile="common_pattern.txt", data=com)
+
 # print("xml list is done")
 
 
@@ -119,3 +130,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    print ("done")
